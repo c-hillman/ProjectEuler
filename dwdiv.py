@@ -1,11 +1,8 @@
 """Some functions that will help dealing with division and primes.
-All functions take abs() and int() of all numbers passed to them.
 """
 
 def isPrime(n):
     """(bool) Returns true if n is a prime integer."""
-    n = abs(int(n))
-    
     if n < 2:
         return False
     elif n == 2:
@@ -20,7 +17,6 @@ def isPrime(n):
 def Eratos(limit):
     """Returns a list of prime integers, where 0 < x <= limit.
     Code based on the Sieve of Eratosthenes."""
-    n = abs(int(limit))
     if limit < 2: return []
     
     primes = {}
@@ -33,7 +29,6 @@ def Eratos(limit):
 def invEratos(limit):
     """Returns list of composite integers where 0 < x <= limit.
     Inverse of Eratos(limit)."""
-    n = abs(int(limit))
     nonprimes = [1]
     if limit < 2: return nonprimes
 
@@ -55,7 +50,6 @@ def primfac(n, form='l'):
     prime factors : exponent of prime factor.
     eg. primeFactorsDict(90) = {2: 1, 3: 2, 5: 1}
     Such that 90 = 2^1 * 3^2 * 5^1"""
-    n = abs(int(n))
     if form == "d" or form == "D": factors = {}
     else: factors = []
 
@@ -77,26 +71,20 @@ def primfac(n, form='l'):
 
 def divnum(n):
     """Returns the number of integers that divide evenly into n."""
-    n = abs(int(n))
-    
     product = 1
     for item in primfac(n, form='d').values():
         product *= (item + 1)
     return product
 
-def divisors(n):
+def divisors(n, inc=True):
     """Returns a sorted list of integers that divide evenly
-    into n (including n)."""
-    n = abs(int(n))
-
+    into n. If inc = True, divisors returns a list oncluding n."""
     divs = [x for x in range(1, int(n/2) + 1) if n%x == 0]
-    divs.append(n)
+    if inc: divs.append(n)
     return divs
 
 def Collatz(n):
     """Returns n's Collatz sequence."""
-    n = abs(int(n))
-    
     steps = [n]
     while n > 1:
         if n % 2 == 0: n /= 2
@@ -106,8 +94,6 @@ def Collatz(n):
 
 def GCD(*args):
     """Returns the greatest common divisor of any number of numbers."""
-    args = list(map(abs, map(int, args)))
-    
     if len(args) == 1: return args[0]
     while len(args) > 2: #GCD(a, b, c) = GCD(a, GCD(b, c))
         args.append(GCD(args.pop(), args.pop()))
@@ -119,8 +105,6 @@ def GCD(*args):
 
 def LCM(*args):
     """Returns the lowest common multiple of any number of numbers."""
-    args = list(map(abs, map(int, args)))
-    
     if len(args) == 1: return args[0]
     while len(args) > 2: #LCM(a, b, c) = LCM(a, GCD(b, c))
         args.append(LCM(args.pop(), args.pop()))
